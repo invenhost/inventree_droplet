@@ -6,21 +6,27 @@ myip=$(hostname -I | awk '{print$1}')
 cat <<EOF
 ********************************************************************************
 
-Welcome to DigitalOcean's 1-Click LEMP Droplet.
+Welcome to MjMair's InvenTree Droplet.
 To keep this Droplet secure, the UFW firewall is enabled.
 All ports are BLOCKED except 22 (SSH), 80 (HTTP), and 443 (HTTPS).
 
-In a web browser, you can view:
-  * The LEMP 1-Click Quickstart guide: https://do.co/2GOFe5J#start
-  * Your LEMP website: http://$myip
+Access the Django admin site
+    URL: http://${myip}/admin
+    User: ${DJANGO_USER}
+    Pass: ${DJANGO_USER_PASSWORD}
+
+Django is configured to use Postgres as its database. Use the following
+credentials to manage the database:
+    Database: django
+    User:     ${DJANGO_USER}
+    Pass:     ${DJANGO_POSTGRESS_PASS}
+
+Open your InvenTree Instance now: http://$myip
 
 On the server:
-  * The default web root is located at /var/www/html
-  * The MySQL root password is saved in /root/.digitalocean_password
-  * Certbot is preinstalled. Run it to configure HTTPS. See
-    https://do.co/2GOFe5J#enable-https for more detail.
-
-For help and more information, visit https://do.co/2GOFe5J
+  * The install follows InvenTree's bare metal install guide - use the user `ìnventree`
+    for all actions and find your install in /home/inventree/src
+  * The passwords are saved in /root/.digitalocean_password
 
 ********************************************************************************
 To delete this message of the day: rm -rf $(readlink -f ${0})

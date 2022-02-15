@@ -1,39 +1,28 @@
 #!/bin/bash
 
 #Generate Mysql root password.
-root_mysql_pass=$(openssl rand -hex 24)
-debian_sys_maint_mysql_pass=$(openssl rand -hex 24)
+root_pgsql_pass=$(openssl rand -hex 24)
+debian_sys_maint_pgsql_pass=$(openssl rand -hex 24)
 
-# Save the passwords
-cat > /root/.digitalocean_password <<EOM
-root_mysql_pass="${root_mysql_pass}"
+# Generate some passwords
+cat > /root/.digitalocean_passwords <<EOM
+DJANGO_USER=inventree
+DJANGO_USER_PASSWORD=$(openssl rand -hex 16)
+DJANGO_POSTGRESS_PASS=$(openssl rand -hex 16)
 EOM
 
-# Configure MySQL root password
-mysqladmin -u root -h localhost password ${root_mysql_pass}
+source /root/.digitalocean_passwords
 
-mysql -uroot -p${root_mysql_pass} \
-      -e "ALTER USER 'debian-sys-maint'@'localhost' IDENTIFIED BY '${debian_sys_maint_mysql_pass}'"
 
-cat > /etc/mysql/debian.cnf <<EOM
-# Automatically generated for Debian scripts. DO NOT TOUCH!
-[client]
-host     = localhost
-user     = debian-sys-maint
-password = ${debian_sys_maint_mysql_pass}
-socket   = /var/run/mysqld/mysqld.sock
-[mysql_upgrade]
-host     = localhost
-user     = debian-sys-maint
-password = ${debian_sys_maint_mysql_pass}
-socket   = /var/run/mysqld/mysqld.sock
-EOM
+# Configure password
+sudo -u postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS}';"
+sudo -u postgres psql -U postgres -d postgres -c "alter user ${DJANGO_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
 
-myip=$(hostname -I | awk '{print$1}')
-sed -e "s|server_name localhost|servername ${myip}|g" \
-    -i /etc/nginx/sites-available/00-digitalocean
+# change config
+sed -e "s/@inventree_password@/${DJANGO_POSTGRESS_PASS}/" -i "${SETTINGS_FILE}"
 
-systemctl restart nginx
+# create user
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_USER', 'temp@example.com', '$DJANGO_USER_PASSWORD')" | python3 "${PROJECT_DIR}/manage.py" shell
 
 # Remove the ssh force logout command
 sed -e '/Match User root/d' \
