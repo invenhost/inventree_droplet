@@ -1,0 +1,16 @@
+[Unit]
+Description=QCluster for InvenTree
+After=inventree-web.service
+
+[Service]
+WorkingDirectory=/home/inventree/src/InvenTree
+ExecStart=/home/inventree/env/bin/python manage.py qcluster
+Restart=always
+StandardError=/home/inventree/log/cluster.err.log
+StandardOutput=/home/inventree/log/cluster.out.log
+SyslogIdentifier=inventree-web
+User=inventree
+# Group=django
+
+[Install]
+WantedBy=multi-user.target

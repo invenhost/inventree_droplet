@@ -34,13 +34,6 @@ sudo cp /var/inventree_default/config.yaml /home/inventree/src/InvenTree/config.
 cd /home/inventree/src
 invoke update
 
-# supervisord (worker, gunicorn)
-sudo cp /home/inventree/src/deploy/supervisord.conf /etc/supervisor/supervisord.conf
-sudo service supervisor start
-supervisord -v
-sudo systemctl restart supervisor
-sudo supervisorctl reread
-
 # nginx
 rm -rvf /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/inventree.conf \
