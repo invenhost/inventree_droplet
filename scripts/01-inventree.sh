@@ -12,6 +12,9 @@ mkdir log data
 
 # get source
 git clone https://github.com/inventree/inventree src
+cd src
+git checkout tags/0.5.4
+cd /home/inventree
 
 # setup postgres
 sudo service postgresql start
