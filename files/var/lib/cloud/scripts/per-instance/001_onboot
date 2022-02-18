@@ -1,12 +1,11 @@
-#!/bin/bash
-
-#Generate Mysql root password.
-root_pgsql_pass=$(openssl rand -hex 24)
-debian_sys_maint_pgsql_pass=$(openssl rand -hex 24)
+#!/bin/bash -x
+exec > >(tee /var/log/one_click_setup.log) 2>&1
 
 # Generate some passwords
 cat > /root/.digitalocean_passwords <<EOM
 DJANGO_USER=inventree
+PROJECT_DIR=/home/inventree/src/InvenTree
+SETTINGS_FILE=/home/inventree/src/InvenTree/config.yaml
 DJANGO_USER_PASSWORD=$(openssl rand -hex 16)
 DJANGO_POSTGRESS_PASS=$(openssl rand -hex 16)
 EOM
@@ -15,13 +14,15 @@ source /root/.digitalocean_passwords
 
 
 # Configure password
-sudo -u postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS}';"
-sudo -u postgres psql -U postgres -d postgres -c "alter user ${DJANGO_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
+setuid postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS}';"
+setuid postgres psql -U postgres -d postgres -c "alter user ${DJANGO_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
 
 # change config
 sed -e "s/@inventree_password@/${DJANGO_POSTGRESS_PASS}/" -i "${SETTINGS_FILE}"
 
 # create user
+cd /home/inventree
+source ./env/bin/activate
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_USER', 'temp@example.com', '$DJANGO_USER_PASSWORD')" | python3 "${PROJECT_DIR}/manage.py" shell
 
 # Remove the ssh force logout command
