@@ -2,6 +2,8 @@
 #
 # Configured as part of the DigitalOcean 1-Click Image build process
 
+. /root/.digitalocean_passwords
+
 myip=$(hostname -I | awk '{print$1}')
 cat <<EOF
 ********************************************************************************
