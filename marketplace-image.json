@@ -64,7 +64,6 @@
         "scripts/01-inventree.sh",
         "scripts/02-ufw.sh",
         "scripts/03-force-ssh-logout.sh",
-        "scripts/04-add-agent.sh",
         "scripts/20-application-tag.sh",
         "scripts/90-cleanup.sh",
         "scripts/99-img-check.sh"
