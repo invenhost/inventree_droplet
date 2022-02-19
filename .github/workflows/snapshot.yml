@@ -8,6 +8,7 @@ concurrency:
   group: snapshot_build
   cancel-in-progress: true
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
