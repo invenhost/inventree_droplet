@@ -25,6 +25,10 @@ cd /home/inventree
 source ./env/bin/activate
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_USER', 'temp@example.com', '$DJANGO_USER_PASSWORD')" | python3 "${PROJECT_DIR}/manage.py" shell
 
+# update InvenTree
+cd src
+invoke update
+
 # Remove the ssh force logout command
 sed -e '/Match User root/d' \
     -e '/.*ForceCommand.*droplet.*/d' \
