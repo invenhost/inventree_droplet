@@ -49,3 +49,6 @@ usermod -a -G www-data inventree
 chown -R inventree:inventree /home/inventree
 chgrp www-data /home/inventree/data -R
 
+# enable services
+systemctl enable inventree-web.service
+systemctl enable inventree-cluster.service
