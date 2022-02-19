@@ -29,6 +29,9 @@ echo "from django.contrib.auth import get_user_model; User = get_user_model(); U
 cd src
 invoke update
 
+# add console
+wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
+
 # Remove the ssh force logout command
 sed -e '/Match User root/d' \
     -e '/.*ForceCommand.*droplet.*/d' \
