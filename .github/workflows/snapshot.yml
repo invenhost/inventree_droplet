@@ -23,5 +23,7 @@ jobs:
           sudo apt-get install -y packer
           packer version
       - name: Build snapshot
+        env: 
+          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
           packer build marketplace-image.json
