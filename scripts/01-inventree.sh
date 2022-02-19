@@ -43,3 +43,9 @@ ln -s /etc/nginx/sites-available/inventree.conf \
       /etc/nginx/sites-enabled/inventree.conf
 rm -rf /var/www/html/*
 chown -R www-data: /var/www
+
+# rights for inventree
+usermod -a -G www-data inventree
+chown -R inventree:inventree /home/inventree
+chgrp www-data /home/inventree/data -R
+
