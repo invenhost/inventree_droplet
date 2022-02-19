@@ -19,7 +19,7 @@ Access the Django admin site
 
 Django is configured to use Postgres as its database. Use the following
 credentials to manage the database:
-    Database: django
+    Database: inventree
     User:     ${DJANGO_USER}
     Pass:     ${DJANGO_POSTGRESS_PASS}
 
