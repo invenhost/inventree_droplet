@@ -3,6 +3,10 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
+  
+concurrency: 
+  group: snapshot_build
+  cancel-in-progress: true
 
 jobs:
   build:
