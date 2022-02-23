@@ -8,3 +8,6 @@ There is a private repo that runs security checks after the action finishes. I m
 ## Listing
 View the resulting listing on the [marketplace page](https://marketplace.digitalocean.com/apps/inventree?refcode=d6172576d014) and consider deploying it from there. This link is a affiliate link - I might earn a comission if you decide to use the app in a base droplet for longer than 5 months.
 You only need the most basic 5$ droplet to run this app - a bit more memmory might help but more than 4 GB is total overallocation - spend those ressources on something nice 😇.  
+
+## Credits
+This repo is otiginally a fork of https://github.com/digitalocean/marketplace-partners and thus uses Apache 2.0 license.
