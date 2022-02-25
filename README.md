@@ -1,5 +1,5 @@
-# inventree_droplet
-DigitalOcean Droplet for InvenTree. This repo includes the scripts needed to build the droplet.
+# InvenTree Droplet
+DigitalOcean Droplet for InvenTree, the intuitive open-source inventory management. This repo includes the scripts needed to build the droplet.
 
 ## CI
 This repo includes an action to build the droplet using packer (the command runs over 10 minutes - I do not need that on my laptop).  
