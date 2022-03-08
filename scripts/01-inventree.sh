@@ -13,7 +13,7 @@ mkdir log data
 # get source
 git clone https://github.com/inventree/inventree src
 cd src
-git checkout tags/0.6.0
+git checkout tags/0.6.1
 cd /home/inventree
 
 # setup postgres
