@@ -24,3 +24,7 @@ curl https://raw.githubusercontent.com/matmair/InvenTree/deploy-test/contrib/ins
 
 # Remove agent
 sudo apt-get purge droplet-agent -y
+
+# Run all updates
+sudo apt-get update
+sudo apt-get upgrade -y
