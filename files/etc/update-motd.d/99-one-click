@@ -3,6 +3,7 @@
 # Configured as part of the DigitalOcean 1-Click Image build process
 
 . /root/.digitalocean_passwords
+export DJANGO_USER_PASSWORD=$(cat /etc/inventree/admin_password.txt)
 
 myip=$(hostname -I | awk '{print$1}')
 cat <<EOF
@@ -12,22 +13,22 @@ Welcome to MjMair's InvenTree Droplet.
 To keep this Droplet secure, the UFW firewall is enabled.
 All ports are BLOCKED except 22 (SSH), 80 (HTTP), and 443 (HTTPS).
 
-Access the Django admin site
+Access the admin site:
     URL: http://${myip}/admin
-    User: ${DJANGO_USER}
+Default credentials:
+    User: admin
     Pass: ${DJANGO_USER_PASSWORD}
 
-Django is configured to use Postgres as its database. Use the following
+Your instance is configured to use Postgres as its database. Use the following
 credentials to manage the database:
     Database: inventree
-    User:     ${DJANGO_USER}
+    User:     ${DJANGO_POSTGRESS_USER}
     Pass:     ${DJANGO_POSTGRESS_PASS}
 
 Open your InvenTree Instance now: http://$myip
 
 On the server:
-  * The install follows InvenTree's bare metal install guide - use the user `ìnventree`
-    for all actions and find your install in /home/inventree/src
+  * This install follows InvenTree's install guide - https://inventree.readthedocs.io/en/latest/start/installer/
   * The passwords are saved in /root/.digitalocean_password
 
 ********************************************************************************
