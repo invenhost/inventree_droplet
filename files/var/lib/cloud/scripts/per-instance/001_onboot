@@ -3,33 +3,27 @@ exec > >(tee /var/log/one_click_setup.log) 2>&1
 
 # Generate some passwords
 cat > /root/.digitalocean_passwords <<EOM
-DJANGO_USER=inventree
 PROJECT_DIR=/home/inventree/src/InvenTree
-SETTINGS_FILE=/home/inventree/src/InvenTree/config.yaml
-DJANGO_USER_PASSWORD=$(openssl rand -hex 16)
+SETTINGS_FILE=/etc/inventree/config.yaml
+DJANGO_POSTGRESS_USER=inventree
 DJANGO_POSTGRESS_PASS=$(openssl rand -hex 16)
+DJANGO_POSTGRESS_PASS_ROOT=$(openssl rand -hex 16)
 EOM
-
 source /root/.digitalocean_passwords
 
+# Configure postgres
+setuid postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS_ROOT}';"
+setuid postgres psql -U postgres -d postgres -c "alter user ${DJANGO_POSTGRESS_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
 
-# Configure password
-setuid postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS}';"
-setuid postgres psql -U postgres -d postgres -c "alter user ${DJANGO_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
+# Write DB config
+sed -i s=USER: inventree=USER:\ ${DJANGO_POSTGRESS_USER}=g "${SETTINGS_FILE}"
+sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g "${SETTINGS_FILE}"
 
-# change config
-sed -e "s/@inventree_password@/${DJANGO_POSTGRESS_PASS}/" -i "${SETTINGS_FILE}"
+# Run general updates
+sudo apt update
+sudo apt upgrade -y
 
-# create user
-cd /home/inventree
-source ./env/bin/activate
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('$DJANGO_USER', 'temp@example.com', '$DJANGO_USER_PASSWORD')" | python3 "${PROJECT_DIR}/manage.py" shell
-
-# update InvenTree
-cd src
-invoke update
-
-# add console
+# Add console
 wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
 
 # Remove the ssh force logout command
