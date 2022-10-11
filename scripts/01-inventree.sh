@@ -21,3 +21,6 @@ export SETUP_EXTRA_PIP="psycopg2 pgcli"
 
 # Install InvenTree
 curl https://raw.githubusercontent.com/matmair/InvenTree/deploy-test/contrib/install.sh | sudo sh
+
+# Remove agent
+sudo apt-get purge droplet-agent -y
