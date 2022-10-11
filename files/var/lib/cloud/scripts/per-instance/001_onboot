@@ -21,10 +21,6 @@ setuid postgres psql -U postgres -d postgres -c "alter user ${DJANGO_POSTGRESS_U
 sed -i s=USER: inventree=USER:\ ${DJANGO_POSTGRESS_USER}=g "${SETTINGS_FILE}"
 sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g "${SETTINGS_FILE}"
 
-# Run general updates
-sudo apt-get update
-sudo apt-get upgrade -y
-
 # Add console
 wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
 
