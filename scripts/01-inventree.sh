@@ -17,7 +17,7 @@ export INVENTREE_DB_USER="inventree"
 export INVENTREE_DB_PASSWORD="inventree_password"
 export INVENTREE_DB_HOST="localhost"
 export INVENTREE_DB_PORT="5432"
-export SETUP_EXTRA_PIP="psycopg2 pgcli"
+export SETUP_EXTRA_PIP="psycopg2-binary pgcli"
 
 # Install InvenTree
 curl https://raw.githubusercontent.com/matmair/InvenTree/deploy-test/contrib/install.sh | sudo sh
