@@ -1,9 +1,9 @@
 # InvenTree Droplet
-DigitalOcean droplet for InvenTree, the intuitive open-source inventory management. This repo contains the scripts needed to build the droplet.
+DigitalOcean droplet for InvenTree, the open-source PLM.  
+This repo contains the scripts needed to build the droplet.
 
 ## CI
-This repo includes an action that builds the droplet using packer (the command runs over 10 minutes - I do not need that on my laptop).  
-There is a private repo that runs security checks after the action finishes (tests if the firewall really is active etc). I might open source that later if I find time to clean it up a bit.
+There is an action that builds the droplet using packer (the command runs over 10 minutes) - this then needs to be submitted manually to the marketplace.
 
 ### Steps
 The only custom things are:
