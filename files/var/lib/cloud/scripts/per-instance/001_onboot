@@ -1,5 +1,6 @@
 #!/bin/bash -x
 print('Running 001_onboot on startup')
+echo 'INV## Starting setup script' | systemd-cat
 
 exec > >(tee /var/log/one_click_setup.log) 2>&1
 
