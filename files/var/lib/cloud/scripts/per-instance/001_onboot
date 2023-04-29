@@ -22,7 +22,7 @@ sed -i s=USER: inventree=USER:\ ${DJANGO_POSTGRESS_USER}=g "${SETTINGS_FILE}"
 sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g "${SETTINGS_FILE}"
 
 # Add console
-wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
+curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
 
 # Remove the ssh force logout command
 sed -e '/Match User root/d' \
