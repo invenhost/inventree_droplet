@@ -25,8 +25,8 @@ sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g 
 curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
 
 # Remove the ssh force logout command
-sed -e '/Match User root/d' \
-    -e '/.*ForceCommand.*droplet.*/d' \
-    -i /etc/ssh/sshd_config
+#sed -e '/Match User root/d' \
+#    -e '/.*ForceCommand.*droplet.*/d' \
+#    -i /etc/ssh/sshd_config
 
-systemctl restart ssh
+#systemctl restart ssh
