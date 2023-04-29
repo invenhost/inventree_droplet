@@ -12,10 +12,12 @@ DJANGO_POSTGRESS_PASS=$(openssl rand -hex 16)
 DJANGO_POSTGRESS_PASS_ROOT=$(openssl rand -hex 16)
 EOM
 source /root/.digitalocean_passwords
+echo 'INV## Generated pwd' | systemd-cat
 
 # Configure postgres
 setuid postgres psql -U postgres -d postgres -c "alter user postgres with password '${DJANGO_POSTGRESS_PASS_ROOT}';"
 setuid postgres psql -U postgres -d postgres -c "alter user ${DJANGO_POSTGRESS_USER} with password '${DJANGO_POSTGRESS_PASS}' ;"
+echo 'INV## Set postgres password' | systemd-cat
 
 # Write DB config
 sed -i s=USER: inventree=USER:\ ${DJANGO_POSTGRESS_USER}=g "${SETTINGS_FILE}"
@@ -23,10 +25,12 @@ sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g 
 
 # Add console
 curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
+echo 'INV## Added console' | systemd-cat
 
 # Remove the ssh force logout command
-#sed -e '/Match User root/d' \
-#    -e '/.*ForceCommand.*droplet.*/d' \
-#    -i /etc/ssh/sshd_config
+sed -e '/Match User root/d' \
+    -e '/.*ForceCommand.*droplet.*/d' \
+    -i /etc/ssh/sshd_config
 
-#systemctl restart ssh
+systemctl restart ssh
+echo 'INV## Set ssh config' | systemd-cat
