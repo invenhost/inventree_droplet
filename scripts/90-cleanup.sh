@@ -25,6 +25,9 @@ elif [ -n "$(command -v apt-get)" ]; then
   apt-get -y autoclean
 fi
 
+# Remove agent
+sudo apt-get purge droplet-agent -y
+
 rm -rf /tmp/* /var/tmp/*
 history -c
 cat /dev/null > /root/.bash_history
