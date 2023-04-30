@@ -20,7 +20,7 @@ export INVENTREE_DB_PORT="5432"
 export SETUP_EXTRA_PIP="psycopg2-binary pgcli"
 
 # Install InvenTree
-wget -Nq https://raw.githubusercontent.com/InvenTree/InvenTree/master/contrib/install.sh && bash install.sh
+wget -qO install.sh https://get.inventree.org && bash install.sh
 
 # Remove agent
 sudo apt-get purge droplet-agent -y
