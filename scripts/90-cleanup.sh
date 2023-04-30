@@ -27,6 +27,7 @@ fi
 
 # Remove agent
 sudo apt-get purge droplet-agent -y
+rm /opt/digitalocean -rf
 
 rm -rf /tmp/* /var/tmp/*
 history -c
