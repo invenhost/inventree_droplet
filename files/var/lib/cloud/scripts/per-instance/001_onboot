@@ -24,8 +24,8 @@ sed -i s=USER: inventree=USER:\ ${DJANGO_POSTGRESS_USER}=g "${SETTINGS_FILE}"
 sed -i s=PASSWORD: inventree_password=PASSWORD:\ \'${DJANGO_POSTGRESS_PASS}\'=g "${SETTINGS_FILE}"
 
 # Add console
-curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
-echo 'INV## Added console' | systemd-cat
+# curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
+# echo 'INV## Added console' | systemd-cat
 
 # Remove the ssh force logout command
 sed -e '/Match User root/d' \

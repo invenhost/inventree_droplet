@@ -23,7 +23,7 @@ export SETUP_EXTRA_PIP="psycopg2-binary pgcli"
 wget -qO install.sh https://get.inventree.org && bash install.sh
 
 # Remove agent
-sudo apt-get purge droplet-agent -y
+sudo apt-get purge do-agent -y
 
 # Run all updates
 sudo apt-get update
